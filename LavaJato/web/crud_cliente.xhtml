@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <b:growl id="gro" delay="4000"/>
+        <b:form id="formLog">
+            <b:commandButton value="inserir" update=":modalInsertLog:formModalInsert" 
+                             oncomplete="$('#modalInsertLog').modal('show')"
+                             />
+            <b:dataTable id="tableLog" var="item"
+                         value="#{clienteController.lerTudo()}">
+
+                <b:dataTableColumn label="Id" value="#{item.id}"/>
+                <b:dataTableColumn label="Nome" value="#{item.nome}"/>
+                <b:dataTableColumn label="telefone" value="#{item.telefone}"/>
+                <b:dataTableColumn label="Login" value="#{item.login}"/>
+                <b:dataTableColumn label="Senha" value="#{item.senha}"/>     
+                <b:dataTableColumn label="Operações">
+                    <b:commandButton icon="pencil" oncomplete="$('#modalUpdateLog').modal('show')"
+                                     update=":modalUpdateLog:formModalUpdate">
+                        <f:setPropertyActionListener value="#{item}" 
+                                                     target="#{clienteController.selCliente}"/>
+                    </b:commandButton>
+                    <b:commandButton icon="trash" update="@none" oncomplete="$('#modalDeleteLog').modal('show')">
+                        <f:setPropertyActionListener value="#{item}"  
+                                                     target="#{clienteController.selCliente}"/>
+                    </b:commandButton>
+                </b:dataTableColumn>
+            </b:dataTable> 
+        </b:form>
+
+        <b:modal id="modalInsertLog" title="Inserir tipo de lavagem">
+            <b:form id="formModalInsert">
+                <b:panelGrid columns="2">
+                    <h:outputText value="Nome"/>
+                    <b:inputText value="#{clienteController.cliente.nome}"/>
+
+                    <h:outputText value="telefone"/>
+                    <b:inputText value="#{clienteController.cliente.telefone}"/>
+
+                    <h:outputText value="Login"/>
+                    <b:inputText value="#{clienteController.cliente.login}"/>
+                    
+                    <h:outputText value="Senha"/>
+                    <b:inputText value="#{clienteController.cliente.senha}"/>
+                </b:panelGrid>
+                <b:commandButton value="inserir" look="primary" action="#{clienteController.inserir()}"
+                                 update=":formLog :gro" 
+                                 oncomplete="$('#modalInsertLog').modal('hide')"/>
+                <b:button value="cancelar" onclick="$('#modalInsertLog').modal('hide')"/>
+            </b:form>
+        </b:modal>
+        
+        <b:modal id="modalUpdateLog" title="Alterar dados do cliente #{clienteController.selCliente.nome}">
+            <b:form id="formModalUpdate">
+                <b:panelGrid columns="2">
+                    <h:outputText value="Nome"/>
+                    <b:inputText value="#{clienteController.selCliente.nome}"/>
+
+                    <h:outputText value="telefone"/>
+                    <b:inputText value="#{clienteController.selCliente.telefone}"/>
+
+                    <h:outputText value="login"/>
+                    <b:inputText value="#{clienteController.selCliente.login}"/>
+                </b:panelGrid>
+                <b:commandButton value="alterar" look="primary" action="#{clienteController.alterar()}"
+                                 update=":formLog :gro" 
+                                 oncomplete="$('#modalUpdateLog').modal('hide')"/>
+                <b:button value="cancelar" onclick="$('#modalUpdateLog').modal('hide')"/>
+            </b:form>
+        </b:modal>
+        
+        
+        <b:modal id="modalDeleteLog" title="Deseja realmente deletar o Cliente #{clienteController.selCliente.nome}">
+            <b:form id="formModalDelete">
+                <b:commandButton value="sim" look="primary" 
+                                 action="#{clienteController.deletar()}"
+                                 update=":gro :formLog"
+                                 oncomplete="$('#modalDeleteLog').modal('hide')"
+                                 />
+                <b:button value="não" onclick="$('#modalDeleteLog').modal('hide')"/>
+            </b:form>
+        </b:modal>
+
+
+    </h:body>
+</html>
