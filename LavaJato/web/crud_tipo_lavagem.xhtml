@@ -11,11 +11,12 @@ and open the template in the editor.
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
+        <link href="css/style.css" type="text/css" rel="stylesheet"></link>
     </h:head>
     <h:body>
         <b:growl id="gro" delay="4000"/>
         <b:form id="formLog">
-            <b:commandButton value="inserir" update=":modalInsertLog:formModalInsert" 
+            <b:commandButton class="insert_buttom" value="Inserir tipo de lavagem" update=":modalInsertLog:formModalInsert" 
                              oncomplete="$('#modalInsertLog').modal('show')"
                              />
             <b:dataTable id="tableLog" var="item"
@@ -25,7 +26,7 @@ and open the template in the editor.
                 <b:dataTableColumn label="Nome" value="#{item.nome}"/>
                 <b:dataTableColumn label="Descrição" value="#{item.descricao}"/>
                 <b:dataTableColumn label="Valor" value="#{item.valor}"/>
-                <b:dataTableColumn label="Operações">
+                <b:dataTableColumn label="Operações" class="d-flex justify-content-center">
                     <b:commandButton icon="pencil" oncomplete="$('#modalUpdateLog').modal('show')"
                                      update=":modalUpdateLog:formModalUpdate">
                         <f:setPropertyActionListener value="#{item}" 

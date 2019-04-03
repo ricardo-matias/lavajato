@@ -1,60 +1,103 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <h:head>
-        <title>Cadastro de Veículo</title>
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+        <title>Facelet Title</title>
     </h:head>
     <h:body>
-          <ui:include src="index.xhtml"/>
-        <p:growl id="gro" sticky="false" life="1000" showDetail="true"/>
-        
-        <h:form id="formCadVei">
-        <p:fieldset legend="Cadastro de Veiculo no sistema">
-            <p:panelGrid columns="3">
-                <h:outputText value="Tipo do carro"/>
-                <p:inputText id="txtTipo" value="#{veiculoController.veiculo.tipo}"
-                             required="true" requiredMessage="O tipo do carro é obrigatorio."/>
-                <p:message for="txtTipo"/>
-               
-                <h:outputText value="Marca do carro"/>
-                <p:inputText id="txtMarca" value="#{veiculoController.veiculo.marca}" required="true" requiredMessage="A marca é obrigatória"/>
-                 <p:message for="txtMarca"/>
-                
-                <h:outputText value="Modelo do carro"/>
-                <p:inputText id="txtModelo" value="#{veiculoController.veiculo.modelo}"
-                             required="true" requiredMessage="O modelo é obrigatório"/>
-                <p:message for="txtModelo"/>
-                <h:outputText value="Placa do carro"/>
-                <p:inputText id="txtPlaca" value="#{veiculoController.veiculo.placa}"
-                             required="true" requiredMessage="A placa é obrigatória"/>
-                <p:message for="txtPlaca"/>
-                <h:outputText value="Cor predominante do carro"/>
-                <p:inputText id="txtCor" value="#{veiculoController.veiculo.corDominante}"
-                             required="true" requiredMessage="A cor predominante é obrigatória"/>
-                <p:message for="txtCor"/>
-                
-            </p:panelGrid>
-            <p:commandButton value="cadastrar Veículo" 
-                             oncomplete="PF('widDialCadastroVei').show()"/>
-            
-            <p:dialog id="dialCadastroVei" resizable="false" modal="true" showEffect="explode"
-                      hideEffect="explode" visible="false" widgetVar="widDialCadastroVei">
-                
-                <h:outputText value="Deseja realmente cadastrar o veículo?"/><br/>
-                
-               
-                <f:facet name="footer">
-                    <p:commandButton value="sim" action="#{veiculoController.inserir()}" update="@form :gro"/>
-                    <p:commandButton value="nao" oncomplete="PF('widDialCadastroVei').hide()"/>
-                </f:facet>
-            </p:dialog>
+        <b:growl id="gro" delay="4000"/>
+        <b:form id="formLog">
+            <b:commandButton value="inserir" update=":modalInsertLog:formModalInsert" 
+                             oncomplete="$('#modalInsertLog').modal('show')"
+                             />
+            <b:dataTable id="tableLog" var="item"
+                         value="#{veiculoController.lerTudo()}">
 
-        </p:fieldset>
-       </h:form>
+                <b:dataTableColumn label="Id" value="#{item.id}"/>
+                <b:dataTableColumn label="Tipo" value="#{item.tipo}"/>
+                <b:dataTableColumn label="Marca" value="#{item.marca}"/>
+                <b:dataTableColumn label="Modelo" value="#{item.modelo}"/>
+                <b:dataTableColumn label="Placa" value="#{item.placa}"/>
+                <b:dataTableColumn label="Cor" value="#{item.corDominante}"/>
+                
+                
+                <b:dataTableColumn label="Operações">
+                    <b:commandButton icon="pencil" oncomplete="$('#modalUpdateLog').modal('show')"
+                                     update=":modalUpdateLog:formModalUpdate">
+                        <f:setPropertyActionListener value="#{item}" 
+                                                     target="#{veiculoController.selVeiculo}"/>
+                    </b:commandButton>
+                    <b:commandButton icon="trash" update="@none" oncomplete="$('#modalDeleteLog').modal('show')">
+                        <f:setPropertyActionListener value="#{item}"  
+                                                     target="#{veiculoController.selVeiculo}"/>
+                    </b:commandButton>
+                </b:dataTableColumn>
+
+            </b:dataTable> 
+        </b:form>
+
+        <b:modal id="modalInsertLog" title="Inserir veículo">
+            <b:form id="formModalInsert">
+                <b:panelGrid columns="2">
+                    <h:outputText value="Tipo"/>
+                    <b:inputText value="#{veiculoController.selVeiculo.tipo}"/>
+
+                    <h:outputText value="Marca"/>
+                    <b:inputText value="#{veiculoController.selVeiculo.marca}"/>
+
+                    <h:outputText value="Placa"/>
+                    <b:inputText value="#{veiculoController.selVeiculo.placa}"/>
+                    
+                    <h:outputText value="Cor"/>
+                    <b:inputText value="#{veiculoController.selVeiculo.corDominante}"/>
+                </b:panelGrid>
+                <b:commandButton value="inserir" look="primary" action="#{veiculoController.inserir()}"
+                                 update=":formLog :gro" 
+                                 oncomplete="$('#modalInsertLog').modal('hide')"/>
+                <b:button value="cancelar" onclick="$('#modalInsertLog').modal('hide')"/>
+            </b:form>
+        </b:modal>
+
+        <b:modal id="modalUpdateLog" title="Alterar Veiculo">
+            <b:form id="formModalUpdate">
+                <b:panelGrid columns="2">
+                    <h:outputText value="Tipo"/>
+                    <b:inputText value="#{veiculoController.selVeiculo.tipo}"/>
+
+                    <h:outputText value="Marca"/>
+                    <b:inputText value="#{veiculoController.selVeiculo.marca}"/>
+
+                    <h:outputText value="Modelo"/>
+                    <b:inputText value="#{veiculoController.selVeiculo.modelo}"/>
+                    
+                    <h:outputText value="Placa"/>
+                    <b:inputText value="#{veiculoController.selVeiculo.placa}"/>
+                    
+                    <h:outputText value="Cor"/>
+                    <b:inputText value="#{veiculoController.selVeiculo.corDominante}"/>
+                </b:panelGrid>
+                <b:commandButton value="alterar" look="primary" action="#{veiculoController.alterar()}"
+                                 update=":formLog :gro" 
+                                 oncomplete="$('#modalUpdateLog').modal('hide')"/>
+                <b:button value="cancelar" onclick="$('#modalUpdateLog').modal('hide')"/>
+            </b:form>
+        </b:modal>
+
+        <b:modal id="modalDeleteLog" title="Deseja realmente deletar esse veículo?">
+            <b:form id="formModalDelete">
+                <b:commandButton value="sim" look="primary" 
+                                 action="#{veiculoController.deletar()}"
+                                 update=":gro :formLog"
+                                 oncomplete="$('#modalDeleteLog').modal('hide')"
+                                 />
+                <b:button value="não" onclick="$('#modalDeleteLog').modal('hide')"/>
+            </b:form>
+        </b:modal>
+
+
     </h:body>
 </html>
-
