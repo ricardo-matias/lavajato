@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package br.edu.ifpe.recife.model.entities;
-import br.edu.ifpe.recife.model.entities.Endereco;
+
 import java.util.Date;
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -20,8 +20,14 @@ import javax.persistence.TemporalType;
  * @author ALUNO
  */
 
-
+@Entity
 public class Veiculo implements Serializable {
  @Id
- @GeneratedValue
+ @GeneratedValue(strategy = GenerationType.IDENTITY)
+ private int id;
+ 
+ @Column(nullable=false,length=20)
+ private String tipo;
+ 
+ 
 }
