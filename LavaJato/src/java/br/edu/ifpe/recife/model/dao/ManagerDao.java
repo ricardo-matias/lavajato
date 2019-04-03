@@ -28,7 +28,7 @@ public class ManagerDao {
     private EntityManagerFactory emf = null;
             
     private ManagerDao(){
-        this.emf = Persistence.createEntityManagerFactory("SelecaoPosPU");
+        this.emf = Persistence.createEntityManagerFactory("LavaJatoPU");
     } 
     
     public void insert(Object o){
