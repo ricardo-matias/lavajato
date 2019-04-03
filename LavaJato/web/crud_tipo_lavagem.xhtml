@@ -26,7 +26,7 @@ and open the template in the editor.
                 <b:dataTableColumn label="Nome" value="#{item.nome}"/>
                 <b:dataTableColumn label="Descrição" value="#{item.descricao}"/>
                 <b:dataTableColumn label="Valor" value="#{item.valor}"/>
-                <b:dataTableColumn label="Operações" class="d-flex justify-content-center">
+                <b:dataTableColumn label="Operações" style="display: flex; justify-content: center;">
                     <b:commandButton icon="pencil" oncomplete="$('#modalUpdateLog').modal('show')"
                                      update=":modalUpdateLog:formModalUpdate">
                         <f:setPropertyActionListener value="#{item}" 
