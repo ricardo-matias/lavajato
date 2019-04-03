@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Cadastro de Veículo</title>
+    </h:head>
+    <h:body>
+          <ui:include src="index.xhtml"/>
+        <p:growl id="gro" sticky="false" life="1000" showDetail="true"/>
+        
+        <h:form id="formCadVei">
+        <p:fieldset legend="Cadastro de Veiculo no sistema">
+            <p:panelGrid columns="3">
+                <h:outputText value="Tipo do carro"/>
+                <p:inputText id="txtTipo" value="#{veiculoController.veiculo.tipo}"
+                             required="true" requiredMessage="O tipo do carro é obrigatorio."/>
+                <p:message for="txtTipo"/>
+               
+                <h:outputText value="Marca do carro"/>
+                <p:inputText id="txtMarca" value="#{veiculoController.veiculo.marca}" required="true" requiredMessage="A marca é obrigatória"/>
+                 <p:message for="txtMarca"/>
+                
+                <h:outputText value="Modelo do carro"/>
+                <p:inputText id="txtModelo" value="#{veiculoController.veiculo.modelo}"
+                             required="true" requiredMessage="O modelo é obrigatório"/>
+                <p:message for="txtModelo"/>
+                <h:outputText value="Placa do carro"/>
+                <p:inputText id="txtPlaca" value="#{veiculoController.veiculo.placa}"
+                             required="true" requiredMessage="A placa é obrigatória"/>
+                <p:message for="txtPlaca"/>
+                <h:outputText value="Cor predominante do carro"/>
+                <p:inputText id="txtCor" value="#{veiculoController.veiculo.corDominante}"
+                             required="true" requiredMessage="A cor predominante é obrigatória"/>
+                <p:message for="txtCor"/>
+                
+            </p:panelGrid>
+            <p:commandButton value="cadastrar Veículo" 
+                             oncomplete="PF('widDialCadastroVei').show()"/>
+            
+            <p:dialog id="dialCadastroVei" resizable="false" modal="true" showEffect="explode"
+                      hideEffect="explode" visible="false" widgetVar="widDialCadastroVei">
+                
+                <h:outputText value="Deseja realmente cadastrar o veículo?"/><br/>
+                
+               
+                <f:facet name="footer">
+                    <p:commandButton value="sim" action="#{veiculoController.inserir()}" update="@form :gro"/>
+                    <p:commandButton value="nao" oncomplete="PF('widDialCadastroVei').hide()"/>
+                </f:facet>
+            </p:dialog>
+
+        </p:fieldset>
+       </h:form>
+    </h:body>
+</html>
+
