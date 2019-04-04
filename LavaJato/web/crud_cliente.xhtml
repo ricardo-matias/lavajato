@@ -11,36 +11,39 @@ and open the template in the editor.
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
+        <link href="css/style.css" type="text/css" rel="stylesheet"></link>
     </h:head>
     <h:body>
         <b:growl id="gro" delay="4000"/>
-        <b:form id="formLog">
-            <b:commandButton value="inserir" update=":modalInsertLog:formModalInsert" 
-                             oncomplete="$('#modalInsertLog').modal('show')"
-                             />
-            <b:dataTable id="tableLog" var="item"
-                         value="#{clienteController.lerTudo()}">
+        
+        <b:container fluid="false">
+            <b:form id="formLog">
+                <b:commandButton class="insert_buttom" value="Inserir cliente" update=":modalInsertLog:formModalInsert" 
+                                 oncomplete="$('#modalInsertLog').modal('show')"
+                                 />
+                <b:dataTable id="tableLog" var="item"
+                             value="#{clienteController.lerTudo()}">
 
-                <b:dataTableColumn label="Id" value="#{item.id}"/>
-                <b:dataTableColumn label="Nome" value="#{item.nome}"/>
-                <b:dataTableColumn label="telefone" value="#{item.telefone}"/>
-                <b:dataTableColumn label="Login" value="#{item.login}"/>
-                <b:dataTableColumn label="Senha" value="#{item.senha}"/>     
-                <b:dataTableColumn label="Operações">
-                    <b:commandButton icon="pencil" oncomplete="$('#modalUpdateLog').modal('show')"
-                                     update=":modalUpdateLog:formModalUpdate">
-                        <f:setPropertyActionListener value="#{item}" 
-                                                     target="#{clienteController.selCliente}"/>
-                    </b:commandButton>
-                    <b:commandButton icon="trash" update="@none" oncomplete="$('#modalDeleteLog').modal('show')">
-                        <f:setPropertyActionListener value="#{item}"  
-                                                     target="#{clienteController.selCliente}"/>
-                    </b:commandButton>
-                </b:dataTableColumn>
-            </b:dataTable> 
-        </b:form>
+                    <b:dataTableColumn label="Id" value="#{item.id}"/>
+                    <b:dataTableColumn label="Nome" value="#{item.nome}"/>
+                    <b:dataTableColumn label="telefone" value="#{item.telefone}"/>
+                    <b:dataTableColumn label="Login" value="#{item.login}"/>   
+                    <b:dataTableColumn label="Operações" class="operations">
+                        <b:commandButton class="operation_button" icon="pencil" oncomplete="$('#modalUpdateLog').modal('show')"
+                                         update=":modalUpdateLog:formModalUpdate">
+                            <f:setPropertyActionListener value="#{item}" 
+                                                         target="#{clienteController.selCliente}"/>
+                        </b:commandButton>
+                        <b:commandButton class="operation_button" icon="trash" update="@none" oncomplete="$('#modalDeleteLog').modal('show')">
+                            <f:setPropertyActionListener value="#{item}"  
+                                                         target="#{clienteController.selCliente}"/>
+                        </b:commandButton>
+                    </b:dataTableColumn>
+                </b:dataTable> 
+            </b:form>
+        </b:container>
 
-        <b:modal id="modalInsertLog" title="Inserir tipo de lavagem">
+        <b:modal id="modalInsertLog" title="Inserir cliente">
             <b:form id="formModalInsert">
                 <b:panelGrid columns="2">
                     <h:outputText value="Nome"/>
@@ -51,17 +54,17 @@ and open the template in the editor.
 
                     <h:outputText value="Login"/>
                     <b:inputText value="#{clienteController.cliente.login}"/>
-                    
+
                     <h:outputText value="Senha"/>
-                    <b:inputText value="#{clienteController.cliente.senha}"/>
+                    <b:inputText type="password" value="#{clienteController.cliente.senha}"/>
                 </b:panelGrid>
                 <b:commandButton value="inserir" look="primary" action="#{clienteController.inserir()}"
                                  update=":formLog :gro" 
                                  oncomplete="$('#modalInsertLog').modal('hide')"/>
-                <b:button value="cancelar" onclick="$('#modalInsertLog').modal('hide')"/>
+                <b:button class="cancel_button" value="cancelar" onclick="$('#modalInsertLog').modal('hide')"/>
             </b:form>
         </b:modal>
-        
+
         <b:modal id="modalUpdateLog" title="Alterar dados do cliente #{clienteController.selCliente.nome}">
             <b:form id="formModalUpdate">
                 <b:panelGrid columns="2">
@@ -80,9 +83,9 @@ and open the template in the editor.
                 <b:button value="cancelar" onclick="$('#modalUpdateLog').modal('hide')"/>
             </b:form>
         </b:modal>
-        
-        
-        <b:modal id="modalDeleteLog" title="Deseja realmente deletar o Cliente #{clienteController.selCliente.nome}">
+
+
+        <b:modal id="modalDeleteLog" title="Deseja realmente deletar o cliente #{clienteController.selCliente.nome}">
             <b:form id="formModalDelete">
                 <b:commandButton value="sim" look="primary" 
                                  action="#{clienteController.deletar()}"

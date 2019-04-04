@@ -1,22 +1,52 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 03/04/2019, 11:20:33
-    Author     : ALUNO
-*/
-
 .glyphicon-pencil {
-    color: blue;
+    color: #337ab7;
 }
 
 .glyphicon-trash {
-    color: red;
+    color: #dc3545;
 }
 
 .insert_buttom {
     margin-top: 2%;
     margin-bottom: 2%;
+    background-color: #337ab7;
+    border-color: #337ab7;
+    color: white;
+}
+
+td {
+    text-align: center;
+}
+
+th {
+    text-align: center;
+}
+
+.operations {
+    display: flex;
+    justify-content: center;
+}
+
+.dataTables_info {
+    display: none;
+}
+
+.paging_simple_numbers {
+    display: flex;
+    justify-content: start;
+    margin-top: 2% !important;
+}
+
+.cancel_button {
+    margin-left: 2%;
+}
+
+.cancel_button:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+}
+
+.operation_button {
+    margin-right: 2%;
 }

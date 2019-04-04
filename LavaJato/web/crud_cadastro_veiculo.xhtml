@@ -5,40 +5,43 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:head>
+    <h:head>
         <title>Facelet Title</title>
+        <link href="css/style.css" type="text/css" rel="stylesheet"></link>
     </h:head>
     <h:body>
         <b:growl id="gro" delay="4000"/>
-        <b:form id="formLog">
-            <b:commandButton value="inserir" update=":modalInsertLog:formModalInsert" 
-                             oncomplete="$('#modalInsertLog').modal('show')"
-                             />
-            <b:dataTable id="tableLog" var="item"
-                         value="#{veiculoController.lerTudo()}">
 
-                <b:dataTableColumn label="Id" value="#{item.id}"/>
-                <b:dataTableColumn label="Tipo" value="#{item.tipo}"/>
-                <b:dataTableColumn label="Marca" value="#{item.marca}"/>
-                <b:dataTableColumn label="Modelo" value="#{item.modelo}"/>
-                <b:dataTableColumn label="Placa" value="#{item.placa}"/>
-                <b:dataTableColumn label="Cor" value="#{item.corDominante}"/>
-                
-                
-                <b:dataTableColumn label="Operações">
-                    <b:commandButton icon="pencil" oncomplete="$('#modalUpdateLog').modal('show')"
-                                     update=":modalUpdateLog:formModalUpdate">
-                        <f:setPropertyActionListener value="#{item}" 
-                                                     target="#{veiculoController.selVeiculo}"/>
-                    </b:commandButton>
-                    <b:commandButton icon="trash" update="@none" oncomplete="$('#modalDeleteLog').modal('show')">
-                        <f:setPropertyActionListener value="#{item}"  
-                                                     target="#{veiculoController.selVeiculo}"/>
-                    </b:commandButton>
-                </b:dataTableColumn>
+        <b:container fluid="false">
+            <b:form id="formLog">
+                <b:commandButton class="insert_buttom" value="Inserir veiculo" update=":modalInsertLog:formModalInsert" 
+                                 oncomplete="$('#modalInsertLog').modal('show')"
+                                 />
+                <b:dataTable id="tableLog" var="item"
+                             value="#{veiculoController.lerTudo()}">
 
-            </b:dataTable> 
-        </b:form>
+                    <b:dataTableColumn label="Id" value="#{item.id}"/>
+                    <b:dataTableColumn label="Tipo" value="#{item.tipo}"/>
+                    <b:dataTableColumn label="Marca" value="#{item.marca}"/>
+                    <b:dataTableColumn label="Modelo" value="#{item.modelo}"/>
+                    <b:dataTableColumn label="Placa" value="#{item.placa}"/>
+                    <b:dataTableColumn label="Cor" value="#{item.corDominante}"/>
+
+                    <b:dataTableColumn class="operations" label="Operações">
+                        <b:commandButton class="operation_button" icon="pencil" oncomplete="$('#modalUpdateLog').modal('show')"
+                                         update=":modalUpdateLog:formModalUpdate">
+                            <f:setPropertyActionListener value="#{item}" 
+                                                         target="#{veiculoController.selVeiculo}"/>
+                        </b:commandButton>
+                        <b:commandButton class="operation_button" icon="trash" update="@none" oncomplete="$('#modalDeleteLog').modal('show')">
+                            <f:setPropertyActionListener value="#{item}"  
+                                                         target="#{veiculoController.selVeiculo}"/>
+                        </b:commandButton>
+                    </b:dataTableColumn>
+
+                </b:dataTable> 
+            </b:form>
+        </b:container>
 
         <b:modal id="modalInsertLog" title="Inserir veículo">
             <b:form id="formModalInsert">
@@ -48,20 +51,20 @@
 
                     <h:outputText value="Marca"/>
                     <b:inputText value="#{veiculoController.veiculo.marca}"/>
-                    
+
                     <h:outputText value="Modelo"/>
                     <b:inputText value="#{veiculoController.veiculo.modelo}"/>
 
                     <h:outputText value="Placa"/>
                     <b:inputText value="#{veiculoController.veiculo.placa}"/>
-                    
+
                     <h:outputText value="Cor"/>
                     <b:inputText value="#{veiculoController.veiculo.corDominante}"/>
                 </b:panelGrid>
                 <b:commandButton value="inserir" look="primary" action="#{veiculoController.inserir()}"
                                  update=":formLog :gro" 
                                  oncomplete="$('#modalInsertLog').modal('hide')"/>
-                <b:button value="cancelar" onclick="$('#modalInsertLog').modal('hide')"/>
+                <b:button class="cancel_button" value="cancelar" onclick="$('#modalInsertLog').modal('hide')"/>
             </b:form>
         </b:modal>
 
@@ -76,10 +79,10 @@
 
                     <h:outputText value="Modelo"/>
                     <b:inputText value="#{veiculoController.selVeiculo.modelo}"/>
-                    
+
                     <h:outputText value="Placa"/>
                     <b:inputText value="#{veiculoController.selVeiculo.placa}"/>
-                    
+
                     <h:outputText value="Cor"/>
                     <b:inputText value="#{veiculoController.selVeiculo.corDominante}"/>
                 </b:panelGrid>

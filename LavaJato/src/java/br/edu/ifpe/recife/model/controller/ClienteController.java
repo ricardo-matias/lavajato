@@ -29,15 +29,14 @@ public class ClienteController {
     }
     
     public void inserir(){      
-        //this.cliente.setDataHora(this.dataAux.getTime());
-        ManagerDao.getCurrentInstance().insert(this.cliente);
-        this.cliente = new Cliente();       
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Log Cadastrado com sucesso!")); 
+        ManagerDao.getCurrentInstance().insert(this.cliente);       
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O cliente " + this.cliente.getNome()+ " deletado com sucesso!")); 
+        this.cliente = new Cliente();
     }
     
     public void alterar(){
         ManagerDao.getCurrentInstance().update(this.selCliente);       
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O registro foi alterado com sucesso!"));       
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cliente " + this.cliente.getId()+ " alterado com sucesso!"));       
     }
     
     public List<Cliente> lerTudo(){
@@ -46,7 +45,7 @@ public class ClienteController {
     
     public void deletar(){
         ManagerDao.getCurrentInstance().delete(this.selCliente);       
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("registro deletado com sucesso!"));        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O cliente " + this.selCliente.getNome()+ " deletado com sucesso!"));        
     }
 
     public Cliente getCliente() {

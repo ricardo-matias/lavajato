@@ -29,23 +29,14 @@ public class VeiculoController implements Serializable {
        this.veiculo = new Veiculo();
    }
    public void inserir(){
-        
-        
-       
         ManagerDao.getCurrentInstance().insert(this.veiculo);
-        this.veiculo = new Veiculo();
-        
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Veiculo Cadastrado com sucesso!"));
-        
-        
+        this.veiculo = new Veiculo();
     }
     
     public void alterar(){
         ManagerDao.getCurrentInstance().update(this.selVeiculo);
-        
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O veículo foi alterado com sucesso!"));
-        
-        
     }
     
     public List<Veiculo> lerTudo(){
@@ -54,9 +45,7 @@ public class VeiculoController implements Serializable {
     
     public void deletar(){
         ManagerDao.getCurrentInstance().delete(this.selVeiculo);
-        
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Veiculo deletado com sucesso!"));
-        
     }
 
    

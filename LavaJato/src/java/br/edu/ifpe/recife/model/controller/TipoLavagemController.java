@@ -33,17 +33,13 @@ public class TipoLavagemController implements Serializable {
     }
     
     public void inserir(){
-        
         ManagerDao.getCurrentInstance().insert(this.tipoLavagemCadastro);
-        //this.tipoLavagemCadastro = new TipoLavagem();
-        
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Tipo de lavagem " + this.tipoLavagemCadastro.getNome() + " cadastrado com sucesso!"));
-        
+        this.tipoLavagemCadastro = new TipoLavagem();
     }
     
     public void alterar(){
         ManagerDao.getCurrentInstance().update(this.tipoLavagemSelecionado);
-        
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O tipo de lavagem de id " + this.tipoLavagemSelecionado.getId() + " foi alterado com sucesso!"));
     }
     
@@ -53,9 +49,7 @@ public class TipoLavagemController implements Serializable {
     
     public void deletar(){
         ManagerDao.getCurrentInstance().delete(this.tipoLavagemSelecionado);
-        
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O tipo de lavagem " + this.tipoLavagemSelecionado.getNome()+ " deletado com sucesso!"));
-        
     }
 
     public TipoLavagem getTipoLavagemCadastro() {

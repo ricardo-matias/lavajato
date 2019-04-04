@@ -15,31 +15,34 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <b:growl id="gro" delay="4000"/>
-        <b:form id="formLog">
-            <b:commandButton class="insert_buttom" value="Inserir tipo de lavagem" update=":modalInsertLog:formModalInsert" 
-                             oncomplete="$('#modalInsertLog').modal('show')"
-                             />
-            <b:dataTable id="tableLog" var="item"
-                         value="#{tipoLavagemController.lerTudo()}">
 
-                <b:dataTableColumn label="Id" value="#{item.id}"/>
-                <b:dataTableColumn label="Nome" value="#{item.nome}"/>
-                <b:dataTableColumn label="Descrição" value="#{item.descricao}"/>
-                <b:dataTableColumn label="Valor" value="#{item.valor}"/>
-                <b:dataTableColumn label="Operações" style="display: flex; justify-content: center;">
-                    <b:commandButton icon="pencil" oncomplete="$('#modalUpdateLog').modal('show')"
-                                     update=":modalUpdateLog:formModalUpdate">
-                        <f:setPropertyActionListener value="#{item}" 
-                                                     target="#{tipoLavagemController.tipoLavagemSelecionado}"/>
-                    </b:commandButton>
-                    <b:commandButton icon="trash" update="@none" oncomplete="$('#modalDeleteLog').modal('show')">
-                        <f:setPropertyActionListener value="#{item}"  
-                                                     target="#{tipoLavagemController.tipoLavagemSelecionado}"/>
-                    </b:commandButton>
-                </b:dataTableColumn>
+        <b:container fluid="false">
+            <b:form id="formLog">
+                <b:commandButton class="insert_buttom" value="Inserir tipo de lavagem" update=":modalInsertLog:formModalInsert" 
+                                 oncomplete="$('#modalInsertLog').modal('show')"
+                                 />
+                <b:dataTable id="tableLog" var="item"
+                             value="#{tipoLavagemController.lerTudo()}">
 
-            </b:dataTable> 
-        </b:form>
+                    <b:dataTableColumn label="Id" value="#{item.id}"/>
+                    <b:dataTableColumn label="Nome" value="#{item.nome}"/>
+                    <b:dataTableColumn label="Descrição" value="#{item.descricao}"/>
+                    <b:dataTableColumn label="Valor" value="#{item.valor}"/>
+                    <b:dataTableColumn label="Operações" class="operations">
+                        <b:commandButton class="operation_button" icon="pencil" oncomplete="$('#modalUpdateLog').modal('show')"
+                                         update=":modalUpdateLog:formModalUpdate">
+                            <f:setPropertyActionListener value="#{item}" 
+                                                         target="#{tipoLavagemController.tipoLavagemSelecionado}"/>
+                        </b:commandButton>
+                        <b:commandButton class="operation_button" icon="trash" update="@none" oncomplete="$('#modalDeleteLog').modal('show')">
+                            <f:setPropertyActionListener value="#{item}"  
+                                                         target="#{tipoLavagemController.tipoLavagemSelecionado}"/>
+                        </b:commandButton>
+                    </b:dataTableColumn>
+
+                </b:dataTable> 
+            </b:form>
+        </b:container>
 
         <b:modal id="modalInsertLog" title="Inserir tipo de lavagem">
             <b:form id="formModalInsert">
@@ -56,7 +59,7 @@ and open the template in the editor.
                 <b:commandButton value="inserir" look="primary" action="#{tipoLavagemController.inserir()}"
                                  update=":formLog :gro" 
                                  oncomplete="$('#modalInsertLog').modal('hide')"/>
-                <b:button value="cancelar" onclick="$('#modalInsertLog').modal('hide')"/>
+                <b:button class="cancel_button" value="cancelar" onclick="$('#modalInsertLog').modal('hide')"/>
             </b:form>
         </b:modal>
 
