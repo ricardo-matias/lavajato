@@ -12,36 +12,39 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
  *
  * @author ALUNO
  */
-
 @Entity
 @Table(name = "tb_veiculo")
 public class Veiculo implements Serializable {
- @Id
- @GeneratedValue(strategy = GenerationType.IDENTITY)
- private Integer id;
- 
- @Column(nullable=false,length=20)
- private String tipo;
- 
- @Column(nullable=false,length=20)
- private String marca;
- 
- @Column(nullable=false,length=50)
- private String modelo;
- 
- @Column(nullable=false,length=20)
- private String placa;
- 
- @Column(nullable=false,length=20)
- private String corDominante;
 
- 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false, length = 20)
+    private String tipo;
+
+    @Column(nullable = false, length = 20)
+    private String marca;
+
+    @Column(nullable = false, length = 50)
+    private String modelo;
+
+    @Column(nullable = false, length = 20)
+    private String placa;
+
+    @Column(nullable = false, length = 20)
+    private String corDominante;
+
+    @OneToOne(mappedBy = "veiculo", optional = false)
+    private Lavagem lavagem;
+
     public Integer getId() {
         return id;
     }
@@ -89,6 +92,15 @@ public class Veiculo implements Serializable {
     public void setCorDominante(String corDominante) {
         this.corDominante = corDominante;
     }
- 
- 
+
+    public Lavagem getLavagem() {
+        return lavagem;
+    }
+
+    public void setLavagem(Lavagem lavagem) {
+        this.lavagem = lavagem;
+    }
+    
+    
+
 }

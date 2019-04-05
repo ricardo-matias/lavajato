@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <link href="css/style.css" type="text/css" rel="stylesheet"></link>
+    </h:head>
+    <h:body>
+        <b:growl id="gro" delay="4000"/>
+
+        <b:container fluid="false">
+            <b:form id="formLog">
+                <b:commandButton class="insert_buttom" value="Inserir tipo de lavagem" update=":modalInsertLog:formModalInsert" 
+                                 oncomplete="$('#modalInsertLog').modal('show')"
+                                 />
+                <b:dataTable id="tableLog" var="item"
+                             value="#{lavagemController.lerTudo()}">
+
+                    <b:dataTableColumn label="Id" value="#{item.id}"/>
+                    <b:dataTableColumn label="Hora da entrada" value="#{item.horaEntrada}"/>
+                    <b:dataTableColumn label="Hora da saida" value="#{item.horaSaida}"/>
+                    <b:dataTableColumn label="Valor pago" value="#{item.valorPago}"/>
+                    <b:dataTableColumn label="Cliente" value="#{item.cliente.id}"/>
+                    <b:dataTableColumn label="Veiculo" value="#{item.veiculo.id}"/>
+                    <b:dataTableColumn label="Tipo de lavagem" value="#{item.tipoLavagem.id}"/>
+                    <b:dataTableColumn label="Operações" class="operations">
+                        <b:commandButton class="operation_button" icon="pencil" oncomplete="$('#modalUpdateLog').modal('show')"
+                                         update=":modalUpdateLog:formModalUpdate">
+                            <f:setPropertyActionListener value="#{item}" 
+                                                         target="#{lavagemController.selLavagem}"/>
+                        </b:commandButton>
+                        <b:commandButton class="operation_button" icon="trash" update="@none" oncomplete="$('#modalDeleteLog').modal('show')">
+                            <f:setPropertyActionListener value="#{item}"  
+                                                         target="#{lavagemController.selLavagem}"/>
+                        </b:commandButton>
+                    </b:dataTableColumn>
+
+                </b:dataTable> 
+            </b:form>
+        </b:container>
+
+        <b:modal id="modalInsertLog" title="Inserir tipo de lavagem">
+            <b:form id="formModalInsert">
+                <b:panelGrid columns="2">
+                    <h:outputText value="Hora da entrada"/>
+                    <b:inputText value="#{lavagemController.lavagem.horaEntrada}"/>
+
+                    <h:outputText value="Hora da saida"/>
+                    <b:inputText value="#{lavagemController.lavagem.horaSaida}"/>
+
+                    <h:outputText value="Valor pago"/>
+                    <b:inputText value="#{lavagemController.lavagem.valorPago}"/>
+                    
+                    <h:outputText value="Cliente"/>
+                    <b:inputText value="#{lavagemController.cliente}"/>
+                    
+                    <h:outputText value="Veiculo"/>
+                    <b:inputText value="#{lavagemController.veiculo}"/>
+                    
+                    <h:outputText value="Tipo de lavagem"/>
+                    <b:inputText value="#{lavagemController.tipoLavagem}"/>
+                </b:panelGrid>
+                <b:commandButton value="inserir" look="primary" action="#{lavagemController.inserir()}"
+                                 update=":formLog :gro" 
+                                 oncomplete="$('#modalInsertLog').modal('hide')"/>
+                <b:button class="cancel_button" value="cancelar" onclick="$('#modalInsertLog').modal('hide')"/>
+            </b:form>
+        </b:modal>
+
+        <b:modal id="modalUpdateLog" title="Alterar tipo de lavagem #{tipoLavagemController.tipoLavagemSelecionado.nome}">
+            <b:form id="formModalUpdate">
+                <b:panelGrid columns="2">
+                    <h:outputText value="Nome"/>
+                    <b:inputText value="#{tipoLavagemController.tipoLavagemSelecionado.nome}"/>
+
+                    <h:outputText value="Descrição"/>
+                    <b:inputText value="#{tipoLavagemController.tipoLavagemSelecionado.descricao}"/>
+
+                    <h:outputText value="Valor"/>
+                    <b:inputText value="#{tipoLavagemController.tipoLavagemSelecionado.valor}"/>
+                </b:panelGrid>
+                <b:commandButton value="alterar" look="primary" action="#{tipoLavagemController.alterar()}"
+                                 update=":formLog :gro" 
+                                 oncomplete="$('#modalUpdateLog').modal('hide')"/>
+                <b:button value="cancelar" onclick="$('#modalUpdateLog').modal('hide')"/>
+            </b:form>
+        </b:modal>
+
+        <b:modal id="modalDeleteLog" title="Deseja realmente deletar esse tipo de lavagem?">
+            <b:form id="formModalDelete">
+                <b:commandButton value="sim" look="primary" 
+                                 action="#{tipoLavagemController.deletar()}"
+                                 update=":gro :formLog"
+                                 oncomplete="$('#modalDeleteLog').modal('hide')"
+                                 />
+                <b:button value="não" onclick="$('#modalDeleteLog').modal('hide')"/>
+            </b:form>
+        </b:modal>
+
+
+    </h:body>
+</html>

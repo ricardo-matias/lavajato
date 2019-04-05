@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -34,7 +35,8 @@ public class TipoLavagem implements Serializable {
     @Column(name = "valor")
     private Double valor;
     
-    
+    @OneToOne(mappedBy = "tipoLavagem", optional = false)
+    private Lavagem lavagem;
 
     public Integer getId() {
         return id;
@@ -62,6 +64,14 @@ public class TipoLavagem implements Serializable {
 
     public void setValor(Double valor) {
         this.valor = valor;
+    }
+
+    public Lavagem getLavagem() {
+        return lavagem;
+    }
+
+    public void setLavagem(Lavagem lavagem) {
+        this.lavagem = lavagem;
     }
     
     

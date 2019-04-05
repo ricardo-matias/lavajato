@@ -3,13 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/joaomouzinho/Desktop/lavajato/LavaJato/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/joaomouzinho/Desktop/lavajato/LavaJato/src/java/br/edu/ifpe/recife/model/entities/TipoLavagem.java</file>
-            <file>file:/C:/Users/joaomouzinho/Desktop/lavajato/LavaJato/src/java/br/edu/ifpe/recife/model/entities/Lavagem.java</file>
-            <file>file:/C:/Users/joaomouzinho/Desktop/lavajato/LavaJato/src/java/br/edu/ifpe/recife/model/entities/Status.java</file>
-            <file>file:/C:/Users/joaomouzinho/Desktop/lavajato/LavaJato/src/java/br/edu/ifpe/recife/model/controller/ClienteController.java</file>
-            <file>file:/C:/Users/joaomouzinho/Desktop/lavajato/LavaJato/src/conf/persistence.xml</file>
-            <file>file:/C:/Users/joaomouzinho/Desktop/lavajato/LavaJato/web/WEB-INF/glassfish-resources.xml</file>
+            <file>file:/home/ricardo/lavajato/LavaJato/web/WEB-INF/glassfish-resources.xml</file>
+            <file>file:/home/ricardo/lavajato/LavaJato/nbproject/build-impl.xml</file>
+            <file>file:/home/ricardo/lavajato/LavaJato/src/conf/persistence.xml</file>
         </group>
     </open-files>
 </project-private>
