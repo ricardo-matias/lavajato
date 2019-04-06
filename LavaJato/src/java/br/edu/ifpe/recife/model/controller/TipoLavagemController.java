@@ -6,7 +6,9 @@
 package br.edu.ifpe.recife.model.controller;
 
 
+import br.edu.ifpe.recife.model.dao.Finders;
 import br.edu.ifpe.recife.model.dao.ManagerDao;
+import br.edu.ifpe.recife.model.entities.Lavagem;
 import br.edu.ifpe.recife.model.entities.TipoLavagem;
 import java.io.Serializable;
 import java.util.List;
@@ -26,10 +28,12 @@ public class TipoLavagemController implements Serializable {
     
     private TipoLavagem tipoLavagemCadastro;
     private TipoLavagem tipoLavagemSelecionado;
+    private Finders finder;
     
     public TipoLavagemController(){
         this.tipoLavagemCadastro = new TipoLavagem();
         //this.tipoLavagemSelecionado = new TipoLavagem();
+        this.finder = new Finders();
     }
     
     public void inserir(){
@@ -48,8 +52,15 @@ public class TipoLavagemController implements Serializable {
     }
     
     public void deletar(){
-        ManagerDao.getCurrentInstance().delete(this.tipoLavagemSelecionado);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O tipo de lavagem " + this.tipoLavagemSelecionado.getNome()+ " deletado com sucesso!"));
+        Lavagem l = this.finder.findLavagemByCliente(this.tipoLavagemSelecionado.getId());
+        
+        if (l != null) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage("Tipo não pode ser deletado, há lavagens em aberto"));
+        }else{
+            ManagerDao.getCurrentInstance().delete(this.tipoLavagemSelecionado);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O tipo de lavagem " + this.tipoLavagemSelecionado.getNome()+ " deletado com sucesso!"));
+        }
     }
 
     public TipoLavagem getTipoLavagemCadastro() {

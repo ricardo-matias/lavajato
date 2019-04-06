@@ -5,8 +5,10 @@
  */
 package br.edu.ifpe.recife.model.controller;
 
+import br.edu.ifpe.recife.model.dao.Finders;
 import br.edu.ifpe.recife.model.dao.ManagerDao;
 import br.edu.ifpe.recife.model.entities.Cliente;
+import br.edu.ifpe.recife.model.entities.Lavagem;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -23,20 +25,22 @@ import javax.faces.context.FacesContext;
 public class ClienteController {
     private Cliente cliente;
     private Cliente selCliente;
+    private Finders finder;
     
     public ClienteController(){
         this.cliente = new Cliente();
+        this.finder = new Finders();
     }
     
     public void inserir(){      
         ManagerDao.getCurrentInstance().insert(this.cliente);       
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O cliente " + this.cliente.getNome()+ " deletado com sucesso!")); 
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O cliente " + this.cliente.getNome()+ " foi cadastrado com sucesso!")); 
         this.cliente = new Cliente();
     }
     
     public void alterar(){
         ManagerDao.getCurrentInstance().update(this.selCliente);       
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cliente " + this.cliente.getId()+ " alterado com sucesso!"));       
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cliente " + this.cliente.getNome()+ " alterado com sucesso!"));       
     }
     
     public List<Cliente> lerTudo(){
@@ -44,8 +48,15 @@ public class ClienteController {
     }
     
     public void deletar(){
-        ManagerDao.getCurrentInstance().delete(this.selCliente);       
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O cliente " + this.selCliente.getNome()+ " deletado com sucesso!"));        
+        Lavagem l = this.finder.findLavagemByCliente(this.selCliente.getId());
+        
+        if (l != null) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage("Usuário não pode ser deletado, há uma lavagem em aberto"));
+        }else{
+            ManagerDao.getCurrentInstance().delete(this.selCliente);       
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O cliente " + this.selCliente.getNome()+ " deletado com sucesso!"));
+        }
     }
 
     public Cliente getCliente() {

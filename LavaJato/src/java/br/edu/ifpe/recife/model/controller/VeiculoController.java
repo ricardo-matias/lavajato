@@ -4,10 +4,12 @@
  * and open the template in the editor.
  */
 package br.edu.ifpe.recife.model.controller;
+import br.edu.ifpe.recife.model.dao.Finders;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import br.edu.ifpe.recife.model.dao.ManagerDao;
+import br.edu.ifpe.recife.model.entities.Lavagem;
 import br.edu.ifpe.recife.model.entities.Veiculo;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -24,9 +26,11 @@ import javax.faces.context.FacesContext;
 public class VeiculoController implements Serializable {
    private Veiculo veiculo;
    private Veiculo selVeiculo;
+    private Finders finder;
    
    public VeiculoController(){
        this.veiculo = new Veiculo();
+        this.finder = new Finders();
    }
    public void inserir(){
         ManagerDao.getCurrentInstance().insert(this.veiculo);
@@ -44,8 +48,15 @@ public class VeiculoController implements Serializable {
     }
     
     public void deletar(){
-        ManagerDao.getCurrentInstance().delete(this.selVeiculo);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Veiculo deletado com sucesso!"));
+        Lavagem l = this.finder.findLavagemByCliente(this.selVeiculo.getId());
+        
+        if (l != null) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage("Veiculo não pode ser deletado, há uma lavagem em aberto"));
+        }else{
+            ManagerDao.getCurrentInstance().delete(this.selVeiculo);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Veiculo deletado com sucesso!"));
+        }
     }
 
    

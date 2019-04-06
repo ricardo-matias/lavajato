@@ -6,8 +6,10 @@
 package br.edu.ifpe.recife.model.dao;
 
 import br.edu.ifpe.recife.model.entities.Cliente;
+import br.edu.ifpe.recife.model.entities.Lavagem;
 import br.edu.ifpe.recife.model.entities.TipoLavagem;
 import br.edu.ifpe.recife.model.entities.Veiculo;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -28,9 +30,12 @@ public class Finders {
     }
 
     public Cliente getClienteById(int id) {
+        System.out.println("-----Buscando ID: " + id);
         String sql = "select u from Cliente u where u.id=" + id;
 
         this.cliente = this.findCliente(sql);
+        //System.out.println("=========ID: " + this.cliente.getId());
+        //this.cliente.setId(id);
 
         if (this.cliente == null) {
             FacesContext.getCurrentInstance().addMessage(null,
@@ -97,5 +102,35 @@ public class Finders {
         } catch (IndexOutOfBoundsException in) {
             return null;
         }
+    }
+    
+    public Lavagem findLavagemByCliente(int idCliente){
+        String sql = "select u from Lavagem u where u.cliente.id=" + idCliente;
+        List<Lavagem> ll = ManagerDao.getCurrentInstance().read(sql, Lavagem.class);
+        Lavagem l = null;
+        if(ll.size() > 0){
+            l = ll.get(0);
+        }
+        return l;     
+    }
+    
+    public Lavagem findLavagemByidVeiculo(int idVeiculo){
+        String sql = "select u from Lavagem u where u.veiculo.id=" + idVeiculo;
+        List<Lavagem> ll = ManagerDao.getCurrentInstance().read(sql, Lavagem.class);
+        Lavagem l = null;
+        if(ll.size() > 0){
+            l = ll.get(0);
+        }
+        return l;     
+    }
+    
+    public Lavagem findLavagemByTipo(int idTipo){
+        String sql = "select u from Lavagem u where u.tipoLavagem.id=" + idTipo;
+        List<Lavagem> ll = ManagerDao.getCurrentInstance().read(sql, Lavagem.class);
+        Lavagem l = null;
+        if(ll.size() > 0){
+            l = ll.get(0);
+        }
+        return l;      
     }
 }

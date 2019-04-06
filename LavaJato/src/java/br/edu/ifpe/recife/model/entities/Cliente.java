@@ -6,8 +6,10 @@
 package br.edu.ifpe.recife.model.entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +40,7 @@ public class Cliente implements Serializable{
     @Column
     private String senha;
     
-    @OneToOne(mappedBy = "cliente", optional = false)
+    @OneToOne(mappedBy = "cliente", optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Lavagem lavagem;
 
     public Integer getId() {
@@ -90,6 +92,25 @@ public class Cliente implements Serializable{
     }
     
     
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (this.id != null ? this.id.hashCode() : 0);
+        return hash;
+    }
     
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Cliente)) {
+            return false;
+        }
+        
+        Cliente other = (Cliente) object;
+        
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
     
 }

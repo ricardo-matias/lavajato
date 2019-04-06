@@ -52,15 +52,15 @@ public class Lavagem implements Serializable {
     @Column(name = "status")
     private Status status;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tipo_lavagem", referencedColumnName = "id")
     private TipoLavagem tipoLavagem;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cliente", referencedColumnName = "id")
     private Cliente cliente;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_veiculo", referencedColumnName = "ID")
     private Veiculo veiculo;
 

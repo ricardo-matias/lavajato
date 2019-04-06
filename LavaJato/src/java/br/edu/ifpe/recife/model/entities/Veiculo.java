@@ -7,8 +7,10 @@ package br.edu.ifpe.recife.model.entities;
 
 import java.util.Date;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,7 +44,7 @@ public class Veiculo implements Serializable {
     @Column(nullable = false, length = 20)
     private String corDominante;
 
-    @OneToOne(mappedBy = "veiculo", optional = false)
+    @OneToOne(mappedBy = "veiculo", optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Lavagem lavagem;
 
     public Integer getId() {

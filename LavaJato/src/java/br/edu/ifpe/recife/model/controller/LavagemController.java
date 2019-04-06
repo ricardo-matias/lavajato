@@ -35,6 +35,11 @@ public class LavagemController implements Serializable {
     private TipoLavagem tipoLavagem;
     private Veiculo veiculo;
     private Finders finder;
+    private Date date;
+    
+    private String clienteID;
+    private String veiculoID;
+    private String tipoID;
 
     public LavagemController() {
         this.lavagem = new Lavagem();
@@ -51,8 +56,41 @@ public class LavagemController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Lavagem Cadastrada com sucesso!"));
 
     }
+    
+    public Cliente getClienteEasy(){
+        String sql = "select u from Cliente u where u.id=" + this.clienteID;
+        try {
+            return (Cliente) ManagerDao.getCurrentInstance().read(sql, Cliente.class).get(0);
+        } catch (IndexOutOfBoundsException in) {
+            return null;
+        }
+    }
+    
+    public Veiculo getVeiculoEasy(){
+        String sql = "select u from Veiculo u where u.id=" + this.veiculoID;
+        try {
+            return (Veiculo) ManagerDao.getCurrentInstance().read(sql, Veiculo.class).get(0);
+        } catch (IndexOutOfBoundsException in) {
+            return null;
+        }
+    }
+    
+    public TipoLavagem getTipoEasy(){
+        String sql = "select u from TipoLavagem u where u.id=" + this.tipoID;
+        try {
+            return (TipoLavagem) ManagerDao.getCurrentInstance().read(sql, TipoLavagem.class).get(0);
+        } catch (IndexOutOfBoundsException in) {
+            return null;
+        }
+    }
 
     public void alterar() {
+        Cliente c = getClienteEasy();
+        Veiculo v = getVeiculoEasy();
+        TipoLavagem t = getTipoEasy();
+        this.selLavagem.setCliente(c);
+        this.selLavagem.setVeiculo(v);
+        this.selLavagem.setTipoLavagem(t);
         ManagerDao.getCurrentInstance().update(this.selLavagem);
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("A lavagem foi alterada com sucesso!"));
@@ -114,6 +152,39 @@ public class LavagemController implements Serializable {
         this.veiculo = finder.getVeiculoById(Integer.parseInt(id));
         this.lavagem.setVeiculo(this.veiculo);
         //this.veiculo = new Veiculo();
+    }
+
+    public String getClienteID() {
+        return clienteID;
+    }
+
+    public void setClienteID(String clienteID) {
+        this.clienteID = clienteID;
+    }
+
+    public String getVeiculoID() {
+        return veiculoID;
+    }
+
+    public void setVeiculoID(String veiculoID) {
+        this.veiculoID = veiculoID;
+    }
+
+    public String getTipoID() {
+        return tipoID;
+    }
+
+    public void setTipoID(String tipoID) {
+        this.tipoID = tipoID;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+        this.lavagem.setHoraEntrada(this.date.getMinutes());
     }
     
     
